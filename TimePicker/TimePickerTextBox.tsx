@@ -1,7 +1,12 @@
 import * as React from 'react';
+import { useState, useEffect } from "react";
 
 import moment, { Moment } from 'moment';
 import TimePicker from 'rc-time-picker';
+
+import { Stack,TextField, mergeStyles} from "office-ui-fabric-react/lib/index"; 
+import { FontIcon} from "office-ui-fabric-react/lib/Icon";
+
 
 //todo : parametrize this
 const format = 'h:mm a';
@@ -9,50 +14,73 @@ const format = 'h:mm a';
 export interface IProps {
     hourvalue: number;
     minutevalue: number;
+    readonly:boolean;
+    masked:boolean;
+
     onChange: (hourvalue:number,minutevalue:number) => void;
 }
 
-export interface IState {
-    hourvalue: number;
-    minutevalue: number;
-    timevalue: moment.Moment;
-}
+const TimePickerTextBox = (props : IProps): JSX.Element => {
 
-export class TimePickerTextBox extends React.Component<IProps, IState> {
+    //STATE HOOKS VARIABLES
+    const [timevalue, setTimevalue] = useState<moment.Moment>(moment().hour(props.hourvalue).minute(props.minutevalue));
 
-    constructor(props: Readonly<IProps>) {
-        super(props);
-        this.state = { hourvalue: props.hourvalue, 
-                        minutevalue: props.minutevalue, 
-                        timevalue: moment().hour(props.hourvalue).minute(props.minutevalue)};
-        this.handleChange = this.handleChange.bind(this);
+    
+    useEffect(() => {
+        if(timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue)
+        {
+            setTimevalue(moment().hour(props.hourvalue).minute(props.minutevalue));
+        }
+    }, [props.hourvalue, props.minutevalue]);
+
+    useEffect(() => {
+        if(timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue)
+        {
+            props.onChange(timevalue.hours(),timevalue.minutes())
+        }      
+    }, [timevalue]);
+
+    const handleChange = (e: Moment) => {
+        setTimevalue(e)      
     }
 
-    componentWillReceiveProps(props: IProps) {
-        this.setState({hourvalue : props.hourvalue ,
-                        minutevalue: props.minutevalue, 
-                        timevalue: moment().hour(props.hourvalue).minute(props.minutevalue)});
-    }
+    //STYLES
+    const iconClass = mergeStyles({
+        fontSize: 30,
+        height: 30,
+        width: 50,
+        margin: "1px",      
+    });
 
-    handleChange(e: Moment) {
-        this.setState({hourvalue: e.hours(),minutevalue: e.minutes(), timevalue:e});
-        this.props.onChange(e.hours(),e.minutes());
-    }
-
-    render() {
-
+    //main rendering
+    if(props.masked){
+        return(
+            <Stack tokens={{ childrenGap: 2 }} horizontal>
+                <FontIcon iconName="Lock" className={iconClass} />     
+                <TextField value="*********" style={{width:"100%"}}/>
+            </Stack>
+        )
+    }else{
         return (
             <TimePicker
                 showSecond={false}
-                defaultValue={this.state.timevalue}
+                value={timevalue}
                 className="time"
-                onChange={this.handleChange}
+                onChange={handleChange}
                 format={format}
                 use12Hours
                 inputReadOnly
+                disabled={props.readonly}
             />
         );
-
     }
 
 }
+export default TimePickerTextBox;
+
+
+
+
+
+
+

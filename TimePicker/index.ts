@@ -1,7 +1,7 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {TimePickerTextBox, IProps} from "./TimePickerTextBox";
+import TimePickerTextBox , {IProps} from "./TimePickerTextBox";
 
 export class TimePicker implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -10,7 +10,11 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 	private _minutevalue:number;
 	private _notifyOutputChanged:() => void;
 	private _container: HTMLDivElement;
-	private props: IProps = { hourvalue : 0, minutevalue : 0, onChange : this.notifyChange.bind(this) };
+	private _props: IProps = { hourvalue : 0, 
+								minutevalue : 0,
+								readonly:false,
+								masked:false, 
+								onChange : this.notifyChange.bind(this) };
 	
 	/**
 	 * Empty constructor.
@@ -36,8 +40,8 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 		// Add control initialization code
 		this._notifyOutputChanged = notifyOutputChanged;
 		this._container = document.createElement("div");
-		this.props.hourvalue = context.parameters.hourvalue.raw || 0;
-		this.props.minutevalue = context.parameters.minutevalue.raw || 0;
+		// this.props.hourvalue = context.parameters.hourvalue.raw || 0;
+		// this.props.minutevalue = context.parameters.minutevalue.raw || 0;
 
 		container.appendChild(this._container);
 	}
@@ -55,12 +59,36 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void
 	{
-		// Add code to update control view
+		//Visibility of the main attribute on the form
+		let isVisible = context.mode.isVisible 
+		
+		// If the bound attribute is disabled because it is inactive or the user doesn't have access
+		let isReadOnly = context.mode.isControlDisabled;
+
+		let isMasked = false;
+		// When a field has FLS enabled, the security property on the attribute parameter is set
+		if (context.parameters.hourvalue.security) {
+			isReadOnly = isReadOnly || !context.parameters.hourvalue.security.editable;
+			isVisible = isVisible && context.parameters.hourvalue.security.readable;
+			isMasked = isVisible && !context.parameters.hourvalue.security.readable
+		}
+
+		if(!isVisible){
+			return;
+		}
+		
+		
+		
+		//Prepare props for component rendering
 		this._hourvalue = context.parameters.hourvalue.raw || 0;
 		this._minutevalue = context.parameters.minutevalue.raw || 0;
-		this.props.hourvalue = this._hourvalue;
+		this._props.hourvalue = this._hourvalue;
+		this._props.minutevalue = this._minutevalue;
+		this._props.readonly = isReadOnly;
+		this._props.masked = isMasked;
+
 		ReactDOM.render(
-			React.createElement(TimePickerTextBox, this.props)
+			React.createElement(TimePickerTextBox, this._props)
 			, this._container
 		);
 	}

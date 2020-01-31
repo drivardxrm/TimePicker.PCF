@@ -11,8 +11,11 @@
   "dependencies": {
     "@types/node": "^10.12.18",
     "@types/powerapps-component-framework": "^1.2.0",
+    "moment": "^2.13.0",
+    "office-ui-fabric-react": "^7.86.1",
     "rc-time-picker": "^3.7.2",
-    "moment": "^2.13.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
     "pcf-scripts": "^1",
