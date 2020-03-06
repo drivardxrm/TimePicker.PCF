@@ -12,29 +12,45 @@ import { FontIcon} from "office-ui-fabric-react/lib/Icon";
 const format = 'h:mm a';
 
 export interface IProps {
-    hourvalue: number;
-    minutevalue: number;
+    hourvalue: number|undefined;
+    minutevalue: number|undefined;
     readonly:boolean;
     masked:boolean;
 
-    onChange: (hourvalue:number,minutevalue:number) => void;
+    onChange: (hourvalue:number|undefined,minutevalue:number|undefined) => void;
 }
 
 const TimePickerTextBox = (props : IProps): JSX.Element => {
 
     //STATE HOOKS VARIABLES
-    const [timevalue, setTimevalue] = useState<moment.Moment>(moment().hour(props.hourvalue).minute(props.minutevalue));
+    const [timevalue, setTimevalue] = useState<moment.Moment|undefined>(undefined);
 
-    
+    useEffect(() => { //CONSTRUCTOR
+        if(props.hourvalue != undefined && props.minutevalue != undefined)
+        {
+            setTimevalue(moment().hour(props.hourvalue).minute(props.minutevalue));
+        }
+    }, []);
+
     useEffect(() => {
-        if(timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue)
+        
+        if(props.hourvalue !== undefined && props.minutevalue !== undefined && 
+            ((timevalue == null || timevalue == undefined)
+                || 
+            timevalue.hours() != props.hourvalue 
+                || 
+            timevalue.minutes() != props.minutevalue))
         {
             setTimevalue(moment().hour(props.hourvalue).minute(props.minutevalue));
         }
     }, [props.hourvalue, props.minutevalue]);
 
     useEffect(() => {
-        if(timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue)
+        if(timevalue == null || timevalue == undefined)
+        {
+            props.onChange(undefined,undefined)
+        }
+        else if(timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue)
         {
             props.onChange(timevalue.hours(),timevalue.minutes())
         }      

@@ -6,8 +6,8 @@ import TimePickerTextBox , {IProps} from "./TimePickerTextBox";
 export class TimePicker implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
 	//private _value:string;
-	private _hourvalue:number;
-	private _minutevalue:number;
+	private _hourvalue:number|undefined;
+	private _minutevalue:number|undefined;
 	private _notifyOutputChanged:() => void;
 	private _container: HTMLDivElement;
 	private _props: IProps = { hourvalue : 0, 
@@ -46,7 +46,7 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 		container.appendChild(this._container);
 	}
 
-	notifyChange(hourvalue:number, minutevalue:number) {
+	notifyChange(hourvalue:number|undefined, minutevalue:number|undefined) {
 		this._hourvalue = hourvalue;
 		this._minutevalue = minutevalue;
 		this._notifyOutputChanged();
@@ -80,8 +80,8 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 		
 		
 		//Prepare props for component rendering
-		this._hourvalue = context.parameters.hourvalue.raw || 0;
-		this._minutevalue = context.parameters.minutevalue.raw || 0;
+		this._hourvalue = context.parameters.hourvalue.raw || undefined;
+		this._minutevalue = context.parameters.minutevalue.raw || undefined;
 		this._props.hourvalue = this._hourvalue;
 		this._props.minutevalue = this._minutevalue;
 		this._props.readonly = isReadOnly;
