@@ -21,11 +21,8 @@ moment         : https://momentjs.com/docs/
 
 
 # Installation
-You can install the component directly with the provided files
-
-https://github.com/drivardxrm/TimePicker.PCF/blob/master/TimePickerPCF_1_0.zip  (Unmanaged solution)
-
-https://github.com/drivardxrm/TimePicker.PCF/blob/master/TimePickerPCF_1_0_managed.zip (Managed solution)
+You can install the component directly from solution files containes in the 'Release' section
+https://github.com/drivardxrm/TimePicker.PCF/releases
 
 # Get required tools
 
