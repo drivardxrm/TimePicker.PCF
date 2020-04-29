@@ -23,17 +23,18 @@ export interface IProps {
 const TimePickerTextBox = (props : IProps): JSX.Element => {
 
     //STATE HOOKS VARIABLES
-    const [timevalue, setTimevalue] = useState<moment.Moment|undefined>(undefined);
-    const [loaded, setLoaded] = useState<boolean>(false);
-
-    useEffect(() => { //CONSTRUCTOR
+    const [timevalue, setTimevalue] = useState<moment.Moment|undefined>( ()=> {
+        //initialisation
         if(props.hourvalue != undefined && props.minutevalue != undefined)
         {
-            setTimevalue(moment().hour(props.hourvalue).minute(props.minutevalue));
+            return moment().hour(props.hourvalue).minute(props.minutevalue);
+        }else{
+            return undefined;
         }
-        setLoaded(true);
-    }, []);
+    });
 
+    //EEFECT HOOKS
+    // When props change
     useEffect(() => {
         
         if(props.hourvalue !== undefined && props.minutevalue !== undefined && 
@@ -47,17 +48,19 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
         }
     }, [props.hourvalue, props.minutevalue]);
 
+    //When timevalue change => signal back to caller (PCF)
     useEffect(() => {
-        if(loaded === true && (timevalue == null || timevalue == undefined))
+        if(timevalue == null || timevalue == undefined)
         {
             props.onChange(undefined,undefined)
         }
-        else if(timevalue !== undefined && (timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue))
+        else if(timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue)
         {
             props.onChange(timevalue.hours(),timevalue.minutes())
         }      
     }, [timevalue]);
 
+    //EVENT HANDLERS
     const handleChange = (e: Moment) => {
         setTimevalue(e)      
     }
@@ -70,7 +73,7 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
         margin: "1px",      
     });
 
-    //main rendering
+    //RENDERING
     if(props.masked){
         return(
             <Stack tokens={{ childrenGap: 2 }} horizontal>
@@ -81,18 +84,18 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
     }else{
         return (
             <div>
-                {loaded && 
-                    <TimePicker
-                        showSecond={false}
-                        value={timevalue}
-                        className="time"
-                        onChange={handleChange}
-                        format={format}
-                        use12Hours
-                        inputReadOnly
-                        disabled={props.readonly}
-                    />
-                }
+
+                <TimePicker
+                    showSecond={false}
+                    value={timevalue}
+                    className="time"
+                    onChange={handleChange}
+                    format={format}
+                    use12Hours
+                    inputReadOnly
+                    disabled={props.readonly}
+                />
+
             </div>
         );
     }
