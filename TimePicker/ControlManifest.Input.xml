@@ -1,42 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="DR" constructor="TimePicker" version="1.0.3" display-name-key="TimePicker" description-key="TimePicker control based on React time Picker (rc-time-picker)" control-type="standard">
+  <control namespace="DR" constructor="TimePicker" version="1.0.6" display-name-key="TimePicker" description-key="TimePicker control based on React time Picker (rc-time-picker)" control-type="standard" preview-image="img/timepicker.png">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
-    <!-- <property name="timevalue" display-name-key="Time Value Field" description-key="Bind this property to the field where you want to store the time value" of-type="SingleLine.Text" usage="bound" required="true" /> -->
     <property name="hourvalue" display-name-key="Hour Value Field" description-key="Bind this property to the field where you want to store the hour value" of-type="Whole.None" usage="bound" required="true" />
     <property name="minutevalue" display-name-key="Minute Value Field" description-key="Bind this property to the field where you want to store the minute value" of-type="Whole.None" usage="bound" required="true" />
 
 
-    <!-- 
-      Property node's of-type attribute can be of-type-group attribute. 
-      Example:
-      <type-group name="numbers">
-        <type>Whole.None</type>
-        <type>Currency</type>
-        <type>FP</type>
-        <type>Decimal</type>
-      </type-group>
-      <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
-    -->
+    
     <resources>
       <code path="index.ts" order="1"/>
       <css path="css/TimePicker.css" order="1" />
-      <!-- UNCOMMENT TO ADD MORE RESOURCES
-      <css path="css/TimePicker.css" order="1" />
-      <resx path="strings/TimePicker.1033.resx" version="1.0.0" />
-      -->
+      <img path="img/timepicker.png" />
     </resources>
-    <!-- UNCOMMENT TO ENABLE THE SPECIFIED API
-    <feature-usage>
-      <uses-feature name="Device.captureAudio" required="true" />
-      <uses-feature name="Device.captureImage" required="true" />
-      <uses-feature name="Device.captureVideo" required="true" />
-      <uses-feature name="Device.getBarcodeValue" required="true" />
-      <uses-feature name="Device.getCurrentPosition" required="true" />
-      <uses-feature name="Device.pickFile" required="true" />
-      <uses-feature name="Utility" required="true" />
-      <uses-feature name="WebAPI" required="true" />
-    </feature-usage>
-    -->
+    
   </control>
 </manifest>

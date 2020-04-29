@@ -5,7 +5,6 @@ import TimePickerTextBox , {IProps} from "./TimePickerTextBox";
 
 export class TimePicker implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
-	//private _value:string;
 	private _hourvalue:number|undefined;
 	private _minutevalue:number|undefined;
 	private _notifyOutputChanged:() => void;
@@ -40,18 +39,9 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 		// Add control initialization code
 		this._notifyOutputChanged = notifyOutputChanged;
 		this._container = document.createElement("div");
-		// this.props.hourvalue = context.parameters.hourvalue.raw || 0;
-		// this.props.minutevalue = context.parameters.minutevalue.raw || 0;
 
 		container.appendChild(this._container);
 	}
-
-	notifyChange(hourvalue:number|undefined, minutevalue:number|undefined) {
-		this._hourvalue = hourvalue;
-		this._minutevalue = minutevalue;
-		this._notifyOutputChanged();
-	}
-
 
 	/**
 	 * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
@@ -114,5 +104,12 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 	{
 		// Add code to cleanup control if necessary
 		ReactDOM.unmountComponentAtNode(this._container);
+	}
+
+	//Function called when props is signaling an update
+	private notifyChange(hourvalue:number|undefined, minutevalue:number|undefined) {
+		this._hourvalue = hourvalue;
+		this._minutevalue = minutevalue;
+		this._notifyOutputChanged();  //=> will trigger getOutputs
 	}
 }

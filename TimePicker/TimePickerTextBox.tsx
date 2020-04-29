@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import moment, { Moment } from 'moment';
 import TimePicker from 'rc-time-picker';
 
-import { Stack,TextField, mergeStyles} from "office-ui-fabric-react/lib/index"; 
-import { FontIcon} from "office-ui-fabric-react/lib/Icon";
+import { FontIcon,Stack,TextField,mergeStyles} from "@fluentui/react"; 
+
 
 
 //todo : parametrize this
@@ -24,12 +24,14 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
 
     //STATE HOOKS VARIABLES
     const [timevalue, setTimevalue] = useState<moment.Moment|undefined>(undefined);
+    const [loaded, setLoaded] = useState<boolean>(false);
 
     useEffect(() => { //CONSTRUCTOR
         if(props.hourvalue != undefined && props.minutevalue != undefined)
         {
             setTimevalue(moment().hour(props.hourvalue).minute(props.minutevalue));
         }
+        setLoaded(true);
     }, []);
 
     useEffect(() => {
@@ -46,11 +48,11 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
     }, [props.hourvalue, props.minutevalue]);
 
     useEffect(() => {
-        if(timevalue == null || timevalue == undefined)
+        if(loaded === true && (timevalue == null || timevalue == undefined))
         {
             props.onChange(undefined,undefined)
         }
-        else if(timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue)
+        else if(timevalue !== undefined && (timevalue.hours() != props.hourvalue || timevalue.minutes() != props.minutevalue))
         {
             props.onChange(timevalue.hours(),timevalue.minutes())
         }      
@@ -78,16 +80,20 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
         )
     }else{
         return (
-            <TimePicker
-                showSecond={false}
-                value={timevalue}
-                className="time"
-                onChange={handleChange}
-                format={format}
-                use12Hours
-                inputReadOnly
-                disabled={props.readonly}
-            />
+            <div>
+                {loaded && 
+                    <TimePicker
+                        showSecond={false}
+                        value={timevalue}
+                        className="time"
+                        onChange={handleChange}
+                        format={format}
+                        use12Hours
+                        inputReadOnly
+                        disabled={props.readonly}
+                    />
+                }
+            </div>
         );
     }
 
