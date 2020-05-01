@@ -12,7 +12,7 @@
     "@types/node": "^13.13.4",
     "@types/powerapps-component-framework": "^1.2.1",
     "moment": "^2.24.0",
-    "@fluentui/react": "^7.108.0",
+    "@fluentui/react": "^7.109.1",
     "rc-time-picker": "^3.7.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

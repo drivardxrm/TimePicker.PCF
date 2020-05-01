@@ -5,12 +5,13 @@ import TimePickerTextBox , {IProps} from "./TimePickerTextBox";
 
 export class TimePicker implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
+	private _firstrender:boolean = true; //will be put to false after first render
 	private _hourvalue:number|undefined;
 	private _minutevalue:number|undefined;
 	private _notifyOutputChanged:() => void;
 	private _container: HTMLDivElement;
-	private _props: IProps = { hourvalue : 0, 
-								minutevalue : 0,
+	private _props: IProps = { hourvalue : undefined, 
+								minutevalue : undefined,
 								readonly:false,
 								masked:false, 
 								onChange : this.notifyChange.bind(this) };
@@ -70,17 +71,27 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 		
 		
 		//Prepare props for component rendering
-		this._hourvalue = context.parameters.hourvalue.raw || undefined;
-		this._minutevalue = context.parameters.minutevalue.raw || undefined;
-		this._props.hourvalue = this._hourvalue;
-		this._props.minutevalue = this._minutevalue;
-		this._props.readonly = isReadOnly;
-		this._props.masked = isMasked;
+		this._hourvalue = context.parameters.hourvalue.raw !== null ? context.parameters.hourvalue.raw : undefined;
+		this._minutevalue = context.parameters.minutevalue.raw !== null ? context.parameters.minutevalue.raw : undefined;
+		console.log("before render : " + this._hourvalue + ":" + this._minutevalue + ", props "+ this._props.hourvalue + ":" + this._props.minutevalue);
+		//RENDER ONLY IF DIFFERENT
+		if(this.shouldRender())
+		{
+			//update the props
+			this._props.hourvalue = this._hourvalue;
+			this._props.minutevalue = this._minutevalue;
+			this._props.readonly = isReadOnly;
+			this._props.masked = isMasked;
 
-		ReactDOM.render(
-			React.createElement(TimePickerTextBox, this._props)
-			, this._container
-		);
+			ReactDOM.render(
+				React.createElement(TimePickerTextBox, this._props)
+				, this._container
+			);
+			if(this._firstrender){
+				this._firstrender = false;
+			}
+		}
+		
 	}
 
 	/** 
@@ -108,8 +119,20 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 
 	//Function called when props is signaling an update
 	private notifyChange(hourvalue:number|undefined, minutevalue:number|undefined) {
+		console.log("notifyChange : " + hourvalue + ":" + minutevalue);
 		this._hourvalue = hourvalue;
 		this._minutevalue = minutevalue;
 		this._notifyOutputChanged();  //=> will trigger getOutputs
+	}
+
+	private shouldRender = ():boolean => 
+	{
+		return this._firstrender ||                            //Always render on first pass
+			((this._props.hourvalue !== this._hourvalue        //Values received must have changed
+				|| 
+			this._props.minutevalue !== this._minutevalue) &&
+			(this._hourvalue === undefined && this._minutevalue === undefined //the 2 Values received must have values or be undefined at the same time
+				|| 
+			this._hourvalue !== undefined && this._minutevalue !== undefined))
 	}
 }
