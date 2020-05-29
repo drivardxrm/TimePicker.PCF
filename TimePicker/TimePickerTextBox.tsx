@@ -37,7 +37,7 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
         
         if(props.hourvalue !== undefined && props.minutevalue !== undefined) 
         {
-            //console.log("EFFECT [props.hourvalue, props.minutevalue] : setTimevalue " + props.hourvalue + ":" + props.minutevalue);
+            
             let newTimevalue:Moment = moment().hour(props.hourvalue).minute(props.minutevalue);
             if(newTimevalue !== timevalue)
             {
@@ -45,7 +45,7 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
             }
             
         }else{
-            //console.log("EFFECT [props.hourvalue, props.minutevalue] : setTimevalue undefined");
+            
             setTimevalue(undefined);
         }
     }, [props.hourvalue, props.minutevalue]);

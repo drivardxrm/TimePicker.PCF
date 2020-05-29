@@ -50,30 +50,21 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void
 	{
-		//Visibility of the main attribute on the form
-		let isVisible = context.mode.isVisible 
-		
+
 		// If the bound attribute is disabled because it is inactive or the user doesn't have access
 		let isReadOnly = context.mode.isControlDisabled;
 
 		let isMasked = false;
 		// When a field has FLS enabled, the security property on the attribute parameter is set
 		if (context.parameters.hourvalue.security) {
-			isReadOnly = isReadOnly || !context.parameters.hourvalue.security.editable;
-			isVisible = isVisible && context.parameters.hourvalue.security.readable;
-			isMasked = isVisible && !context.parameters.hourvalue.security.readable
+			isReadOnly = isReadOnly || !context.parameters.hourvalue.security.editable;		
+			isMasked = !context.parameters.hourvalue.security.readable
 		}
 
-		if(!isVisible){
-			return;
-		}
-		
-		
-		
 		//Prepare props for component rendering
 		this._hourvalue = context.parameters.hourvalue.raw !== null ? context.parameters.hourvalue.raw : undefined;
 		this._minutevalue = context.parameters.minutevalue.raw !== null ? context.parameters.minutevalue.raw : undefined;
-		console.log("before render : " + this._hourvalue + ":" + this._minutevalue + ", props "+ this._props.hourvalue + ":" + this._props.minutevalue);
+		
 		//RENDER ONLY IF DIFFERENT
 		if(this.shouldRender())
 		{
@@ -119,7 +110,7 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 
 	//Function called when props is signaling an update
 	private notifyChange(hourvalue:number|undefined, minutevalue:number|undefined) {
-		console.log("notifyChange : " + hourvalue + ":" + minutevalue);
+		
 		this._hourvalue = hourvalue;
 		this._minutevalue = minutevalue;
 		this._notifyOutputChanged();  //=> will trigger getOutputs

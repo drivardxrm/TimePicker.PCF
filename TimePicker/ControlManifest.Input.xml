@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="DR" constructor="TimePicker" version="1.0.8" display-name-key="TimePicker" description-key="TimePicker control based on React time Picker (rc-time-picker)" control-type="standard" preview-image="img/timepicker-preview.png"> 
+  <control namespace="DR" constructor="TimePicker" version="1.0.9" display-name-key="TimePicker" description-key="TimePicker control based on React time Picker (rc-time-picker)" control-type="standard" preview-image="img/timepicker-preview.png"> 
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="hourvalue" display-name-key="Hour Value Field" description-key="Bind this property to the field where you want to store the hour value" of-type="Whole.None" usage="bound" required="true" />
     <property name="minutevalue" display-name-key="Minute Value Field" description-key="Bind this property to the field where you want to store the minute value" of-type="Whole.None" usage="bound" required="true" />
