@@ -1,7 +1,7 @@
 # TimePicker.PCF
 Time Picker PCF (PowerApps Component framework) Control based on React time Picker (rc-time-picker)
 
-It will display a formatted input field with a pop-up for time entry (hours, minutes, am/pm).
+It will display a formatted input field with a pop-up for time entry.
 
 It requires 2 backend fields on CDS side.
 
@@ -9,10 +9,20 @@ hourvalue : Whole number
 
 minutevalue : Whole number
 
+
 # Dependencies
 rc-time-picker : https://github.com/react-component/time-picker
 
 moment         : https://momentjs.com/docs/
+
+# Parameters
+| Parameter         | Description                                                                                  | 
+|-------------------|----------------------------------------------------------------------------------------------|
+| hourvalue         | Bind this property to the field where you want to store the hour value                       |         
+| minutevalue       | Bind this property to the field where you want to store the hour value                       |         
+| displaytype       | 12 Hours or 24 hours format                                                                  |   
+
+
 
 # Screenshots
 ![alt text](https://github.com/drivardxrm/TimePicker.PCF/blob/master/timepicker.png?raw=true)
