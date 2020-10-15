@@ -6,14 +6,16 @@ import { FontIcon,Stack,TextField,mergeStyles} from "@fluentui/react";
 
 
 
-//todo : parametrize this
-const format = 'h:mm a';
+
 
 export interface IProps {
     hourvalue: number|undefined;
     minutevalue: number|undefined;
     readonly:boolean;
     masked:boolean;
+    format:"h:mm a"|"k:mm";
+    use12Hours:boolean;
+
 
     onChange: (hourvalue:number|undefined,minutevalue:number|undefined) => void;
 }
@@ -97,8 +99,8 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
                     value={timevalue}
                     className="time"
                     onChange={handleChange}
-                    format={format}
-                    use12Hours
+                    format={props.format}
+                    use12Hours={props.use12Hours}
                     inputReadOnly
                     disabled={props.readonly}
                 />
