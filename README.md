@@ -1,4 +1,4 @@
-# TimePicker.PCF
+# TimePicker.PCF ![GitHub all releases](https://img.shields.io/github/downloads/drivardxrm/TimePicker.PCF/total?style=plastic)
 Time Picker PCF (PowerApps Component framework) Control based on React time Picker (rc-time-picker)
 
 It will display a formatted input field with a pop-up for time entry.
