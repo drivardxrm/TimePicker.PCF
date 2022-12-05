@@ -11,7 +11,7 @@
   "dependencies": {
     "react": "^18",
     "react-dom": "^18",
-    "@fluentui/react": "^8.82.0",
+    "@fluentui/react": "^8.101.0",
     "moment": "^2.29.4",
     "rc-time-picker": "^3.7.3"
   },
