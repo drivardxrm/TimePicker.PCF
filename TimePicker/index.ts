@@ -1,11 +1,12 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createElement } from 'react';
+import { createRoot, Root } from 'react-dom/client';
 import TimePickerTextBox , {IProps} from "./TimePickerTextBox";
 
 export class TimePicker implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
-	
+	private _root: Root;
+	private _isFluent2:    boolean
 	private _hourvalue:number|undefined;
 	private _minutevalue:number|undefined;
 	private _notifyOutputChanged:() => void;
@@ -16,6 +17,9 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 								masked:false, 
 								format:"h:mm a",
 								use12Hours:true,
+								hourstep:1,
+								minutestep:1,
+
 								onChange : this.notifyChange.bind(this) };
 	
 	/**
@@ -41,9 +45,12 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 	{
 		// Add control initialization code
 		this._notifyOutputChanged = notifyOutputChanged;
-		this._container = document.createElement("div");
+		this._root = createRoot(container!)
 
-		container.appendChild(this._container);
+		// context.fluentDesignLanguage will be null if 'New Look' is not turned on
+		if((context as any).fluentDesignLanguage){
+			this._isFluent2 = true;
+		}
 	}
 
 	/**
@@ -69,20 +76,18 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 		let display = context.parameters.displaytype.raw;
 		
 		
-			//update the props
-			this._props.hourvalue = this._hourvalue;
-			this._props.minutevalue = this._minutevalue;
-			this._props.readonly = isReadOnly;
-			this._props.masked = isMasked;
-			this._props.use12Hours = display === "12 hrs";
-			this._props.format = display === "12 hrs" ? "h:mm a" : "k:mm";
+		//update the props
+		this._props.hourvalue = this._hourvalue;
+		this._props.minutevalue = this._minutevalue;
+		this._props.readonly = isReadOnly;
+		this._props.masked = isMasked;
+		this._props.use12Hours = display === "12 hrs";
+		this._props.format = display === "12 hrs" ? "h:mm a" : "k:mm";
+		this._props.hourstep = context.parameters.hourstep?.raw ?? 1;
+		this._props.minutestep = context.parameters.minutestep?.raw ?? 1;
 
-			ReactDOM.render(
-				React.createElement(TimePickerTextBox, this._props)
-				, this._container
-			);
-			
-		
+
+		this._root.render(createElement(TimePickerTextBox, this._props)) 
 		
 	}
 
@@ -106,7 +111,7 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 	public destroy(): void
 	{
 		// Add code to cleanup control if necessary
-		ReactDOM.unmountComponentAtNode(this._container);
+		this._root.unmount();
 	}
 
 	//Function called when props is signaling an update
