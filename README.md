@@ -21,6 +21,9 @@ moment         : https://momentjs.com/docs/
 | hourvalue         | Bind this property to the field where you want to store the hour value                       |         
 | minutevalue       | Bind this property to the field where you want to store the hour value                       |         
 | displaytype       | 12 Hours or 24 hours format                                                                  |   
+| hourstep          | optional - interval for hour selection (default 1)                                                                  |   
+| minutestep        | optional - interval for minute selection (default 1)                                                                  |   
+| editenabled       | optional - enable manual edit (default false)                                                                  |   
 
 
 
