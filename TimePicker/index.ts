@@ -6,11 +6,9 @@ import TimePickerTextBox , {IProps} from "./TimePickerTextBox";
 export class TimePicker implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
 	private _root: Root;
-	private _isFluent2:    boolean
 	private _hourvalue:number|undefined;
 	private _minutevalue:number|undefined;
 	private _notifyOutputChanged:() => void;
-	private _container: HTMLDivElement;
 	private _props: IProps = { hourvalue : undefined, 
 								minutevalue : undefined,
 								readonly:false,
@@ -19,6 +17,7 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 								use12Hours:true,
 								hourstep:1,
 								minutestep:1,
+								editenabled:false,
 
 								onChange : this.notifyChange.bind(this) };
 	
@@ -47,10 +46,6 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 		this._notifyOutputChanged = notifyOutputChanged;
 		this._root = createRoot(container!)
 
-		// context.fluentDesignLanguage will be null if 'New Look' is not turned on
-		if((context as any).fluentDesignLanguage){
-			this._isFluent2 = true;
-		}
 	}
 
 	/**
@@ -85,6 +80,7 @@ export class TimePicker implements ComponentFramework.StandardControl<IInputs, I
 		this._props.format = display === "12 hrs" ? "h:mm a" : "k:mm";
 		this._props.hourstep = context.parameters.hourstep?.raw ?? 1;
 		this._props.minutestep = context.parameters.minutestep?.raw ?? 1;
+		this._props.editenabled = context.parameters.editenabled?.raw === "true" ?? false;
 
 
 		this._root.render(createElement(TimePickerTextBox, this._props)) 

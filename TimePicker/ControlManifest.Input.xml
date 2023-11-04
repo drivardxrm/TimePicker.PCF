@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="DR" constructor="TimePicker" version="1.0.12" display-name-key="TimePicker" description-key="TimePicker control based on React time Picker (rc-time-picker)" control-type="standard" preview-image="img/timepicker-preview.png"> 
+  <control namespace="DR" constructor="TimePicker" version="1.0.15" display-name-key="TimePicker" description-key="TimePicker control based on React time Picker (rc-time-picker)" control-type="standard" preview-image="img/timepicker-preview.png"> 
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="hourvalue" display-name-key="Hour Value Field" description-key="Bind this property to the field where you want to store the hour value" of-type="Whole.None" usage="bound" required="true" />
     <property name="minutevalue" display-name-key="Minute Value Field" description-key="Bind this property to the field where you want to store the minute value" of-type="Whole.None" usage="bound" required="true" />
@@ -11,7 +11,10 @@
     </property>
     <property name="hourstep" display-name-key="Hour Step" description-key="(Optional) Step for hour selector. default = 1" of-type="Whole.None" usage="input" required="false" />
     <property name="minutestep" display-name-key="Minute Step" description-key="(Optional) Step for minute selector. default = 1" of-type="Whole.None" usage="input" required="false" />
-
+    <property name="editenabled" display-name-key="Edit Enabled" description-key="Manual edit enabled (default = false)" of-type="Enum" usage="input" required="true">
+      <value name="true" display-name-key="true" description-key="True" >true</value>
+      <value name="false" display-name-key="false" description-key="False" default="true">false</value>
+    </property>
 
     <resources>
       <code path="index.ts" order="1"/>

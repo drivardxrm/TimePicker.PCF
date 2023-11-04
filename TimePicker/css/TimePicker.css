@@ -46,7 +46,7 @@
   height: 35px;
   cursor: text;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.5;
   color: rgb(0, 0, 0);
   background-color: #fff;
@@ -68,7 +68,7 @@
 .rc-time-picker-input[disabled]:hover {
   background:  rgb(226, 226, 226);
   border: 1px solid rgb(226, 226, 226);
-  font-weight: 600;
+  font-weight: 400;
   cursor: default;
 }
 

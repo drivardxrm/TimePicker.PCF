@@ -17,6 +17,7 @@ export interface IProps {
     use12Hours:boolean;
     hourstep:number;
     minutestep:number;
+    editenabled:boolean;
 
     onChange: (hourvalue:number|undefined,minutevalue:number|undefined) => void;
 }
@@ -104,8 +105,9 @@ const TimePickerTextBox = (props : IProps): JSX.Element => {
                     use12Hours={props.use12Hours}
                     hourStep={props.hourstep}
                     minuteStep={props.minutestep}
-                    inputReadOnly
+                    inputReadOnly={!props.editenabled}
                     disabled={props.readonly}
+
                 />
 
             </div>
