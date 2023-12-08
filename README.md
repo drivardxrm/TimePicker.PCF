@@ -18,8 +18,8 @@ moment         : https://momentjs.com/docs/
 # Parameters
 | Parameter         | Description                                                                                  | 
 |-------------------|----------------------------------------------------------------------------------------------|
-| hourvalue         | Bind this property to the field where you want to store the hour value                       |         
-| minutevalue       | Bind this property to the field where you want to store the hour value                       |         
+| hourvalue         | Bind this property to the field where you want to store the hours value                       |         
+| minutevalue       | Bind this property to the field where you want to store the minutes value                       |         
 | displaytype       | 12 Hours or 24 hours format                                                                  |   
 | hourstep          | optional - interval for hour selection (default 1)                                                                  |   
 | minutestep        | optional - interval for minute selection (default 1)                                                                  |   
