@@ -12,7 +12,7 @@
     "react": "^18",
     "react-dom": "^18",
     "@fluentui/react": "^8.112.4",
-    "moment": "^2.29.4",
+    "moment": "^2.30.1",
     "rc-time-picker": "^3.7.3"
   },
   "devDependencies": {
