@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="DR" constructor="TimePicker" version="1.0.15" display-name-key="TimePicker" description-key="TimePicker control based on React time Picker (rc-time-picker)" control-type="standard" preview-image="img/timepicker-preview.png"> 
+  <control namespace="DR" constructor="TimePicker" version="1.0.17" display-name-key="TimePicker" description-key="TimePicker control based on React time Picker (rc-time-picker)" control-type="standard" preview-image="img/timepicker-preview.png"> 
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="hourvalue" display-name-key="Hour Value Field" description-key="Bind this property to the field where you want to store the hour value" of-type="Whole.None" usage="bound" required="true" />
     <property name="minutevalue" display-name-key="Minute Value Field" description-key="Bind this property to the field where you want to store the minute value" of-type="Whole.None" usage="bound" required="true" />
 
-    <property name="displaytype" display-name-key="Display Type" description-key="Display Type" of-type="Enum" usage="input" required="true">
+    <property name="displaytype" display-name-key="Display Type" description-key="Display : 24 hrs or 12 hrs based" of-type="Enum" usage="input" required="true">
       <value name="12hrs" display-name-key="12hrs" description-key="12hrs">12 hrs</value>
-      <value name="24hrs" display-name-key="24hrs" description-key="24hrs">24 hrs</value>
+      <value name="24hrs" display-name-key="24hrs" description-key="24hrs" default="true">24 hrs</value>
     </property>
     <property name="hourstep" display-name-key="Hour Step" description-key="(Optional) Step for hour selector. default = 1" of-type="Whole.None" usage="input" required="false" />
     <property name="minutestep" display-name-key="Minute Step" description-key="(Optional) Step for minute selector. default = 1" of-type="Whole.None" usage="input" required="false" />
